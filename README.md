@@ -1,7 +1,7 @@
 ---
 title: "Seminario Asignatura"
 subtitle: "Bases de Datos"
-author: "Rubén Peña, Daniel Navajas, Andrés Carballo"
+author: "Rubén Peña,  Daniel Navajas,  Andrés Carballo"
 output: 
   html_document:
     keep_md: true
@@ -67,7 +67,7 @@ VALUES
     (71454398L, 2, 'Lou Costello', 30, 'Masculino', 65.3, 'Burgos', 250, 17),
     (71456349S, 3, 'Andrés Caraballo', 60, 'Femenino', 70.2, 'Melilla', 400, 13),
     (71309450C, 4, 'César Ausin' 20, 'Masculino', 68.2, default, 300, 16),
-    (15368752Z, 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18),
+    (15368752Z, 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18);
 ")
 
 ```
@@ -96,26 +96,22 @@ Table: 5 records
 
 </div>
 
-#### **Tabla consultas**
-
-Contendrá los registros de consultas médicas.
+#### **Tabla diagnostico_medico**
 
 
 ``` r
-# Crear tabla 'consultas'
+# Crear tabla 'diagnostico_medico'
 dbExecute(con, "
 CREATE TABLE consultas (
-    id_consulta SERIAL PRIMARY KEY,
-    id_paciente INTEGER REFERENCES pacientes(id_paciente), -- Clave foránea a 'pacientes'
+    DNI SERIAL PRIMARY KEY,
+    id_paciente INTEGER REFERENCES pacientes(id_paciente), -- Clave ajena a 'pacientes'
     fecha DATE NOT NULL,
-    diagnostico VARCHAR(255),
+    enfermedad VARCHAR(40),
+    hospital VARCHAR(40) DEFAULT 'HUBU',
+    doctor VARCHAR(40),
     CONSTRAINT chk_fecha CHECK (fecha <= CURRENT_DATE) -- La fecha de consulta no puede ser futura
 );
 ")
-```
-
-```
-## [1] 0
 ```
 
 Ahora agregamos valores a las tablas de consultas
@@ -126,15 +122,13 @@ Ahora agregamos valores a las tablas de consultas
 dbExecute(con, "
 INSERT INTO consultas (id_paciente, fecha, diagnostico) 
 VALUES 
-    (1, '2024-01-10', 'Hipertensión'),
-    (2, '2024-02-15', 'Diabetes Tipo 2'),
-    (3, '2024-03-01', 'Insuficiencia Cardíaca');
+    (71453722V, 1, '2024-01-10', 'Hepatitis', default, Shaun Murphy),
+    (71454398L, 2, '2024-02-15', 'Cirrosis', default, Manuel Iván Pérez),
+    (71456349S, 3, '2024-03-01', 'Cirrosis', Hospital universitario La Paz, Manuel Iván Pérez),
+    (15368752Z, 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', Gregory House);
 ")
 ```
 
-```
-## [1] 3
-```
 
 Mostramos la tabla
 
@@ -147,19 +141,19 @@ SELECT * FROM consultas;
 <div class="knitsql-table">
 
 
-Table: 3 records
+Table:  records
 
-|id_consulta | id_paciente|fecha      |diagnostico            |
-|:-----------|-----------:|:----------|:----------------------|
-|1           |           1|2024-01-10 |Hipertensión           |
-|2           |           2|2024-02-15 |Diabetes Tipo 2        |
-|3           |           3|2024-03-01 |Insuficiencia Cardíaca |
+| DNI       | ID_paciente | Fecha      | Enfermedad   | Hospital                      | Doctor            |
+| --------- | ----------- | ---------- | ------------ | ----------------------------- | ----------------- |
+| 71453722V | 1           | 2024-01-10 | Hepatitis    | default                       | Shaun Murphy      |
+| 71454398L | 2           | 2024-02-15 | Cirrosis     | default                       | Manuel Iván Pérez |
+| 71456349S | 3           | 2024-03-01 | Cirrosis     | Hospital universitario La Paz | Manuel Iván Pérez |
+| 15368752Z | 5           | 2024-03-25 | Pancreatitis | Río Carrión                   | Gregory House     |
+
 
 </div>
 
-#### **Tabla tratamientos**
-
-Contendrá los tratamientos que se administran a los pacientes.
+#### **Tabla evaluacion_psicologica**
 
 
 ``` r
