@@ -67,7 +67,7 @@ VALUES
     (71454398L, 2, 'Lou Costello', 30, 'Masculino', 65.3, 'Burgos', 250, 17),
     (71456349S, 3, 'Andrés Caraballo', 60, 'Femenino', 70.2, 'Melilla', 400, 13),
     (71309450C, 4, 'César Ausin' 20, 'Masculino', 68.2, default, 300, 16),
-    (15368752Z, 5, 'Gonzalo Villacorta', 'Masculino', 75.4, 'Palencia', 190, 18),
+    (15368752Z, 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18),
 ")
 
 ```
@@ -83,13 +83,16 @@ SELECT * FROM pacientes;
 <div class="knitsql-table">
 
 
-Table: 3 records
+Table: 5 records
 
-|id_paciente |nombre          | edad|genero    | peso| altura|
-|:-----------|:---------------|----:|:---------|----:|------:|
-|1           |Juan Pérez      |   45|Masculino | 80.5|   1.75|
-|2           |Ana López       |   30|Femenino  | 65.3|   1.68|
-|3           |Carlos Martínez |   60|Masculino | 90.2|   1.80|
+| DNI       | ID | Nombre             | Edad | Sexo      | Peso | Ciudad   | Consumo actual | Edad comienzo consumo |
+| --------- | -- | ------------------ | ---- | --------- | ---- | -------- | -------------- | --------------------- |
+| 71453722V | 1  | Bud Abbott         | 45   | Masculino | 80.5 | default  | 300            | 18                    |
+| 71454398L | 2  | Lou Costello       | 30   | Masculino | 65.3 | Burgos   | 250            | 17                    |
+| 71456349S | 3  | Andrés Caraballo   | 60   | Femenino  | 70.2 | Melilla  | 400            | 13                    |
+| 71309450C | 4  | César Ausin        | 20   | Masculino | 68.2 | default  | 300            | 16                    |
+| 15368752Z | 5  | Gonzalo Villacorta | 65   | Masculino | 75.4 | Palencia | 190            | 18                    |
+
 
 </div>
 
