@@ -9,28 +9,21 @@ output:
 ---
 
 
-
-# Ejemplo de seminario
-
-A continuación os dejo un ejercicio muy básico para que veáis cómo estructurar el trabajo del seminario. Reitero que es muy básico y un seminario similar a este ejemplo, **no estaría a la altura de ser aprobado**.
-
 ## Introducción
 
-Estos datos se corresponden a un ejemplo sintético (*i.e.* ficticio) de **epidemiología**.
+Se va a trabajar con tres **relaciones** asociadas al consumo de alcohol y sus enfermedades causadas en diversos pacientes. 
 
-En total se crearán tres **tablas**.
-
-1.  **Tabla pacientes**: Contendrá los datos de los pacientes.
-2.  **Tabla consultas**: Contendrá los registros de consultas médicas.
-3.  **Tabla tratamientos**: Contendrá los tratamientos que se administran a los pacientes.
+1.  **Tabla pacientes**: Contendrá los datos de los paciente incluyendo la cantidad media de consumo de alcohol y edad de inicio de consumo.
+2.  **Tabla diagnostico_medico**: Contendrá los datos relativos a la enfermedad del paciente y la consulta realizada.
+3.  **Tabla evaluacion_psicologica**: Contendrá el estado psicológico del paciente y las pruebas realizadas.
 
 ## Objetivos/Preguntas
 
 A continuación se responderán las siguientes preguntas:
 
-1.  ¿Cuáles son los nombres de los pacientes y los tratamientos que están recibiendo?
-2.  Cuántas consultas han sido diagnosticadas con cada tipo de diagnóstico?
-3.  ¿Cuál es la dosis promedio de tratamiento que están recibiendo los pacientes en cada diagnóstico?
+1.  ¿Con qué edad empezó a consumir cada paciente?
+2.  ¿Cuántos pacientes fueron diagnosticados con las diferentes enfermedades?
+3.  ¿Cuál es la puntuación promedio que obtienen los pacientes en cada evaluación?
 
 ## Metodología y Resultados
 
@@ -47,19 +40,20 @@ Contendrá los datos de los pacientes.
 # Crear tabla 'pacientes'
 dbExecute(con, "
 CREATE TABLE pacientes (
+    DNI CHAR(9) UNIQUE,
     id_paciente SERIAL PRIMARY KEY,
     nombre VARCHAR(100),
     edad INTEGER CHECK (edad >= 0), -- La edad no puede ser negativa
-    genero VARCHAR(10) CHECK (genero IN ('Masculino', 'Femenino', 'Otro')), -- Género debe ser uno de estos valores
+    sexo VARCHAR(10) CHECK (genero IN ('Masculino', 'Femenino')), -- Género debe ser uno de estos valores
     peso DECIMAL(5,2) CHECK (peso > 0), -- Peso debe ser mayor a 0
-    altura DECIMAL(4,2) CHECK (altura > 0) -- Altura debe ser mayor a 0
+    ciudad VARCHAR(30) DEFAULT 'Burgos',
+    consumo_promedio_ml/semana smallint CHECK (consumo_promedio_ml > 0),
+    edad_comienzo_consumo smallint
 );
 ")
 ```
 
-```
-## [1] 0
-```
+
 
 Ahora agregamos los datos de los pacientes
 
@@ -69,14 +63,13 @@ Ahora agregamos los datos de los pacientes
 dbExecute(con, "
 INSERT INTO pacientes (nombre, edad, genero, peso, altura) 
 VALUES 
-    ('Juan Pérez', 45, 'Masculino', 80.5, 1.75),
-    ('Ana López', 30, 'Femenino', 65.3, 1.68),
-    ('Carlos Martínez', 60, 'Masculino', 90.2, 1.80);
+    (71453722V, 1, 'Bud Abbott', 45, 'Masculino', 80.5, default, 300, 18),
+    (71454398L, 2, 'Lou Costello', 30, 'Masculino', 65.3, 'Burgos', 250, 17),
+    (71456349S, 3, 'Andrés Caraballo', 60, 'Femenino', 70.2, 'Melilla', 400, 13),
+    (71309450C, 4, 'César Ausin' 20, 'Masculino', 68.2, default, 300, 16),
+    (15368752Z, 5, 'Gonzalo Villacorta', 'Masculino', 75.4, 'Palencia', 190, 18),
 ")
-```
 
-```
-## [1] 3
 ```
 
 Mostramos la tabla
