@@ -8,57 +8,7 @@ output:
     self_contained: true
 ---
 
-# Crear una conexión a una BBDD local usando R
 
-Para poder ejecutar los comandos de `sql` en un documento RMarkdown, deberemos utilizar los paquetes `DBI` y `RPostgres`.
-
-A continuación se detalla los pasos necesarios para generar una conexión local.
-
-
-``` r
-# Cargar el paquete RPostgres
-library(DBI)
-library(RPostgres)
-
-# Conectar a la base de datos PostgreSQL
-con <- dbConnect(RPostgres::Postgres(),
-                 dbname = "postgres",  # Nombre de la base de datos
-                 host = "localhost",           # Dirección del host
-                 port = 5432,                  # Puerto de PostgreSQL
-                 user = "postgres",          # Tu usuario de PostgreSQL
-                 password = "postgres")   # Tu contraseña de PostgreSQL
-```
-
-# Idea de Seminario
-
-En este semianrio tendréis que ser capáz de generar tablas con datos relativos a la salud humana y/o biomedicina. Para esto tendréis que buscar en diferentes repositorios de datos disponibles.
-
-A continuación te dejo un **pequeño** listado con recursos, pero se valorará la obtención de datos de diversos orígenes.
-
--   [Datos abiertos Gob. España](https://datos.gob.es/es/catalogo) / [`opendataes`](https://github.com/rOpenSpain/opendataes)
--   [Datos abiertos CyL](https://datosabiertos.jcyl.es/web/es/datos-abiertos-castilla-leon.html) / [`opendataes`](https://github.com/rOpenSpain/opendataes)
--   [Datos espaciales de hospitales](https://opendata.esri.es/datasets/ComunidadSIG::hospitales-de-espa%C3%B1a/about)
--   [INE (Instituto Nacional de Estadística) package](https://inebaser.wordpress.com/)
--   [rOpenSpain community](https://ropenspain.es/) / [GitHub-Repo](https://github.com/rOpenSpain)
--   [European Health Information Initiative (EHII)](https://www.euro.who.int/en/data-and-evidence/european-health-information-initiative-ehii)
--   [World Health Organization (WHO)](https://www.who.int/data)
--   [rOpenHealth](https://github.com/rOpenHealth)
-
-## Datos del seminario
-
-Los datos deberán ser ingresados "*manualmente*"; es decir, que tendréis que crear las tablas vosotros mismos y así poder aplicar todas (o la gran mayoría) de conceptos y restricciones que veamos en prácticas.
-
-## Tablas del seminario
-
-El número de tablas creadas no está definido pero han de ser más de dos. De esta manera podréis construir preguntas/ejemplos en los que poner en práctica la unión de tablas y el calculo de variables y operaciones (sumarias, de conjunto, etc).
-
-## Texto del seminario
-
-El texto deberá seguir el orden de un informe/artículo científico; en el que se vean claramente:
-
--   **Introducción**: se hablará del tema a tratar y de dónde provienen los datos.
--   **Objetivos/Preguntas**: se detallarán un máximo de 4 preguntas (u objetivos), los cuales serán respondidos con consultas en SQL.
--   **Métodología y Resultados**: se corresponde con la ejecución del código y la obtención de las tablas resultantes que responderán a las pregunats anteriores.
 
 # Ejemplo de seminario
 
