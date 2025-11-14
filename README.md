@@ -1,9 +1,7 @@
-# Todo-esfuerzo-tiene-La-Recompensa-
 ---
 title: "Seminario Asignatura"
 subtitle: "Bases de Datos"
-author: "Antonio Canepa"
-date: "2025-11-05"
+author: "Rubén Peña, Daniel Navajas, Andrés Carballo"
 output: 
   html_document:
     keep_md: true
@@ -390,3 +388,4 @@ Finalmente, desconectamos la base de datos local.
 # Cerrar la conexión
 dbDisconnect(con)
 ```
+
