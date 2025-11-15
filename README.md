@@ -1,6 +1,6 @@
 ---
-title: "Seminario Asignatura"
-subtitle: "Bases de Datos"
+title: "SRelaciones entre el Consumo de Alcohol, Enfermedades Hepáticas y Evaluación Psicológica"
+subtitle: "Asignatura : Bases de Datos"
 author: " Daniel Navajas, Rubén Peña, Andrés Carballo"
 output: 
   html_document:
