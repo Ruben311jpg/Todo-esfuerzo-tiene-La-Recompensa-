@@ -66,6 +66,11 @@ VALUES
     ('71456349S', 3, 'Andrés Caraballo', 60, 'Femenino', 70.2, 'Melilla', 400, 13),
     ('71309450C', 4, 'César Ausin', 20, 'Masculino', 68.2, default, 300, 16),
     ('15368752Z', 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18);
+    ('71459876A', 6, 'María López',       27, 'Femenino',  62.0, 'Burgos',     120, 12),
+    ('71451234B', 7, 'Javier Martín',     50, 'Masculino', 88.3, 'Valladolid', 500, 16),
+    ('71452345C', 8, 'Lucía Sánchez',     22, 'Femenino',  55.1, 'Burgos',      80, 18);
+    ('71453421D', 9,  'Sergio Ortega',     41, 'Masculino', 82.0,  'León',     220, 20),
+    ('71455678E', 10, 'Elena Martínez',    33, 'Femenino',  59.5,  'Burgos',   150, 18);
 ")
 
 ```
@@ -83,14 +88,18 @@ SELECT * FROM pacientes;
 
 Table: 5 records
 
-| DNI       | ID | Nombre             | Edad | Sexo      | Peso | Ciudad   | Consumo actual | Edad comienzo consumo |
-| --------- | -- | ------------------ | ---- | --------- | ---- | -------- | -------------- | --------------------- |
-| 71453722V | 1  | Bud Abbott         | 45   | Masculino | 80.5 | default  | 300            | 18                    |
-| 71454398L | 2  | Lou Costello       | 30   | Masculino | 65.3 | Burgos   | 250            | 17                    |
-| 71456349S | 3  | Andrés Caraballo   | 60   | Femenino  | 70.2 | Melilla  | 400            | 13                    |
-| 71309450C | 4  | César Ausin        | 20   | Masculino | 68.2 | default  | 300            | 16                    |
-| 15368752Z | 5  | Gonzalo Villacorta | 65   | Masculino | 75.4 | Palencia | 190            | 18                    |
-
+| DNI       | id_paciente | Nombre             | Edad | Sexo      | Peso | Ciudad     | Consumo actual   | Edad inicio |
+|-----------|-------------|--------------------|------|-----------|------|------------|------------------|-------------|
+| 71453722V | 1           | Bud Abbott         | 45   | Masculino | 80.5 | Burgos     | 300              | 18          |
+| 71454398L | 2           | Lou Costello       | 30   | Masculino | 65.3 | Burgos     | 250              | 17          |
+| 71456349S | 3           | Andrés Caraballo   | 60   | Femenino  | 70.2 | Melilla    | 400              | 13          |
+| 71309450C | 4           | César Ausin        | 20   | Masculino | 68.2 | Burgos     | 300              | 16          |
+| 15368752Z | 5           | Gonzalo Villacorta | 65   | Masculino | 75.4 | Palencia   | 190              | 18          |
+| 71459876A | 6           | María López        | 27   | Femenino  | 62.0 | Burgos     | 120              | 12          |
+| 71451234B | 7           | Javier Martín      | 50   | Masculino | 88.3 | Valladolid | 500              | 16          |
+| 71452345C | 8           | Lucía Sánchez      | 22   | Femenino  | 55.1 | Burgos     | 80               | 18          |
+| 71453421D | 9           | Sergio Ortega      | 41   | Masculino | 82.0 | León       | 220              | 20          |
+| 71455678E | 10          | Elena Martínez     | 33   | Femenino  | 59.5 | Burgos     | 150              | 18          |
 
 </div>
 
@@ -122,9 +131,15 @@ dbExecute(con, "
 INSERT INTO diagnostico_medico (id_diagnostico, DNI, id_paciente, fecha, enfermedad, hospital, doctor) 
 VALUES 
     (1, '71453722V', 1, '2024-01-10', 'Hepatitis', default, 'Shaun Murphy'),
-    (2, '71454398L', 2, '2024-02-15', 'Cirrosis', default, 'Manuel Iván Pérez'),
+    (2, '71454398L', 2, '2024-02-15', 'Cirrosis', HUBU, 'Manuel Iván Pérez'),
     (3, '71456349S', 3, '2024-03-01', 'Cirrosis', 'Hospital universitario La Paz', 'Manuel Iván Pérez'),
     (4, '15368752Z', 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', 'Gregory House');
+    (5, '71459876A', 6, '2024-04-10', 'Gastritis','12 de Octubre', 'Julia González'),
+    (6, '71451234B', 7, '2024-02-28', 'Cirrosis','HUBU', 'Manuel Iván Pérez'),
+    (7, '71451234B', 7, '2024-05-15', 'Encefalopatía hepática', 'HUBU', 'Manuel Iván Pérez'),
+    (8, '71452345C', 8, '2024-06-01', 'Trastorno de ansiedad','12 de Octubre', 'Julia González'),
+    (9,  '71453421D', 9,  '2024-07-15', 'Hígado graso alcohólico', 'HUBU', 'Julia González'),
+    (10, '71455678E', 10, '2024-08-01', 'Gastritis alcohólica',    'HUBU', 'Shaun Murphy');
 ")
 ```
 
@@ -142,12 +157,19 @@ SELECT * FROM diagnostico_medico;
 
 Table:  records
 
-|ID_diagnostico| DNI       | ID_paciente | Fecha      | Enfermedad   | Hospital                      | Doctor            |
-| ------------ | --------- | ----------- | ---------- | ------------ | ----------------------------- | ----------------- |
-| 1            | 71453722V | 1           | 2024-01-10 | Hepatitis    | default                       | Shaun Murphy      |
-| 2            | 71454398L | 2           | 2024-02-15 | Cirrosis     | default                       | Manuel Iván Pérez |
-| 3            | 71456349S | 3           | 2024-03-01 | Cirrosis     | Hospital universitario La Paz | Manuel Iván Pérez |
-| 4            | 15368752Z | 5           | 2024-03-25 | Pancreatitis | Río Carrión                   | Gregory House     |
+| id_diagnostico | DNI        | id_paciente | Fecha       | Enfermedad                | Hospital                      | Doctor             |
+|----------------|------------|-------------|-------------|---------------------------|-------------------------------|--------------------|
+| 1              | 71453722V  | 1           | 2024-01-10  | Hepatitis                 | HUBU                          | Shaun Murphy       |
+| 2              | 71454398L  | 2           | 2024-02-15  | Cirrosis                  | HUBU                          | Manuel Iván Pérez  |
+| 3              | 71456349S  | 3           | 2024-03-01  | Cirrosis                  | Hospital universitario La Paz | Manuel Iván Pérez  |
+| 4              | 15368752Z  | 5           | 2024-03-25  | Pancreatitis              | Río Carrión                   | Gregory House      |
+| 5              | 71459876A  | 6           | 2024-04-10  | Gastritis                 | 12 de Octubre                 | Julia González     |
+| 6              | 71451234B  | 7           | 2024-02-28  | Cirrosis                  | HUBU                          | Manuel Iván Pérez  |
+| 7              | 71451234B  | 7           | 2024-05-15  | Encefalopatía hepática    | HUBU                          | Manuel Iván Pérez  |
+| 8              | 71452345C  | 8           | 2024-06-01  | Trastorno de ansiedad     | 12 de Octubre                 | Julia González     |
+| 9              | 71453421D  | 9           | 2024-07-15  | Hígado graso alcohólico   | HUBU                          | Julia González     |
+| 10             | 71455678E  | 10          | 2024-08-01  | Gastritis alcohólica      | HUBU                          | Shaun Murphy       |
+
 
 
 </div>
@@ -184,6 +206,10 @@ VALUES
     (3,'71456349S', 3, '2024-03-10', 9, 'AUDIT', 'Manuel Iván Pérez'),
     (4,'71309450C', 4, '2024-03-20', 5, 'AUDIT-C', 'Julia González'),
     (5,'15368752Z', 5, '2024-03-30', 7, 'AUDIT', 'Gregory House');
+    (6, '71459876A', 6, '2024-04-20', 4, 'AUDIT-C', 'Julia González'),
+    (7, '71451234B', 7, '2024-03-05', 9, 'AUDIT',   'Manuel Iván Pérez'),
+    (8, '71451234B', 7, '2024-06-10', 8, 'AUDIT',   'Manuel Iván Pérez'),
+    (9, '71452345C', 8, '2024-06-10', 3, 'AUDIT-C', 'Julia González');
 ")
 ```
 
@@ -200,13 +226,17 @@ SELECT * FROM evaluacion_psicologica;
 
 Table: 3 records
 
-| id_evaluacion | DNI        | id_paciente | Fecha       | Puntuación | Escala usada | Doctor              |
-|---------------|------------|-------------|-------------|------------|--------------|---------------------|
-| 1             | 71453722V  | 1           | 2024-01-18  | 8          | AUDIT        | Shaun Murphy        |
-| 2             | 71454398L  | 2           | 2024-02-20  | 6          | AUDIT-C      | Manuel Iván Pérez   |
-| 3             | 71456349S  | 3           | 2024-03-10  | 9          | AUDIT        | Manuel Iván Pérez   |
-| 4             | 71309450C  | 4           | 2024-03-20  | 5          | AUDIT-C      | Julia González      |
-| 5             | 15368752Z  | 5           | 2024-03-30  | 7          | AUDIT        | Gregory House       |
+| id_evaluacion | DNI       | id_paciente | Fecha       | Puntuación | Escala usada | Doctor             |
+|---------------|-----------|------------ |------------|----------- |--------------|--------------------|
+| 1             | 71453722V | 1           | 2024-01-18 | 8          | AUDIT        | Shaun Murphy       |
+| 2             | 71454398L | 2           | 2024-02-20 | 6          | AUDIT-C      | Manuel Iván Pérez  |
+| 3             | 71456349S | 3           | 2024-03-10 | 9          | AUDIT        | Manuel Iván Pérez  |
+| 4             | 71309450C | 4           | 2024-03-20 | 5          | AUDIT-C      | Julia González     |
+| 5             | 15368752Z | 5           | 2024-03-30 | 7          | AUDIT        | Gregory House      |
+| 6             | 71459876A | 6           | 2024-04-20 | 4          | AUDIT-C      | Julia González     |
+| 7             | 71451234B | 7           | 2024-03-05 | 9          | AUDIT        | Manuel Iván Pérez  |
+| 8             | 71451234B | 7           | 2024-06-10 | 8          | AUDIT        | Manuel Iván Pérez  |
+| 9             | 71452345C | 8           | 2024-06-10 | 3          | AUDIT-C      | Julia González     |
 
 
 </div>
