@@ -46,7 +46,7 @@ CREATE TABLE pacientes (
     peso DECIMAL(5,2) CHECK (peso > 0), -- Peso debe ser mayor a 0
     ciudad VARCHAR(30) DEFAULT 'Burgos',
     consumo_promedio_ml smallint CHECK (consumo_promedio_ml > 0), -- Consumo de alcohol medido en mililitros/semana
-    edad_comienzo_consumo smallint -- Edad a la que empezó a consumir alcohol
+    edad_comienzo_consumo smallint CHECK (edad_comienzo_consumo <= edad) -- Que nadie comience a consumir después de su edad acutal
 );
 ")
 ```
@@ -103,7 +103,7 @@ dbExecute(con, "
 CREATE TABLE diagnostico_medico(
     id_diagnostico smallint PRIMARY KEY,
     DNI CHAR(9) NOT NULL REFERENCES pacientes(dni),
-    id_paciente INTEGER REFERENCES pacientes(id_paciente), -- Clave ajena a 'pacientes'
+    id_paciente SMALLINT REFERENCES pacientes(id_paciente), -- Clave ajena a 'pacientes'
     fecha DATE NOT NULL,
     enfermedad VARCHAR(40),
     hospital VARCHAR(40) DEFAULT 'HUBU',
@@ -161,9 +161,9 @@ dbExecute(con, "
 CREATE TABLE evaluacion_psicologica (
     id_evaluacion SMALLINT PRIMARY KEY,
     DNI CHAR(9) NOT NULL REFERENCES pacientes(dni),
-    id_paciente INTEGER REFERENCES pacientes(id_paciente), 
+    id_paciente SMALLINT REFERENCES pacientes(id_paciente), 
     fecha DATE NOT NULL,
-    puntuacion INTEGER CHECK (puntuacion > 0 and puntuacion < 10),
+    puntuacion INTEGER CHECK (puntuacion >= 0 and puntuacion <= 10),
     escala_usada VARCHAR(20) DEFAULT '',
     doctor VARCHAR(30),
     CONSTRAINT chk_fecha CHECK (fecha <= CURRENT_DATE) -- La fecha de consulta no puede ser futura
