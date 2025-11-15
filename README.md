@@ -1,7 +1,7 @@
 ---
-title: "Relaciones entre el Consumo de Alcohol, Enfermedades Hepáticas y Evaluación Psicológica"
-subtitle: "Asignatura : Bases de Datos"
-author: " Daniel Navajas, Rubén Peña, Andrés Carballo"
+Título: "Relaciones entre el Consumo de Alcohol, Enfermedades Hepáticas y Evaluación Psicológica"
+Subtítulo: "Asignatura : Bases de Datos"
+Autores: " Daniel Navajas, Rubén Peña, Andrés Carballo"
 output: 
   html_document:
     keep_md: true
