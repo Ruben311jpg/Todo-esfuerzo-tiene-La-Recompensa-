@@ -331,7 +331,7 @@ print(tables)
 ```
 
 ```
-## [1] "consultas"    "pacientes"    "tratamientos"
+## [1] "pacientes"    "diagnostico_medico"    "evaluacion_psicologica"
 ```
 
 ``` r
