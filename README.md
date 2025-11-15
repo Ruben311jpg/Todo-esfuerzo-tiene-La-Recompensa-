@@ -42,10 +42,10 @@ CREATE TABLE pacientes (
     id_paciente SERIAL PRIMARY KEY,
     nombre VARCHAR(100),
     edad INTEGER CHECK (edad >= 0), -- La edad no puede ser negativa
-    sexo VARCHAR(10) CHECK (genero IN ('Masculino', 'Femenino')), -- Género debe ser uno de estos valores
+    sexo VARCHAR(10) CHECK (sexo IN ('Masculino', 'Femenino')), -- Género debe ser uno de estos valores
     peso DECIMAL(5,2) CHECK (peso > 0), -- Peso debe ser mayor a 0
     ciudad VARCHAR(30) DEFAULT 'Burgos',
-    consumo_promedio smallint CHECK (consumo_promedio_ml > 0), -- Consumo de alcohol medido en mililitros/semana
+    consumo_promedio_ml smallint CHECK (consumo_promedio_ml > 0), -- Consumo de alcohol medido en mililitros/semana
     edad_comienzo_consumo smallint -- Edad a la que empezó a consumir alcohol
 );
 ")
@@ -59,13 +59,13 @@ Ahora agregamos los datos de los pacientes
 ``` r
 # Insertar datos en 'pacientes'
 dbExecute(con, "
-INSERT INTO pacientes (DNI, id_paciente, nombre, edad, genero, peso, ciudad, consumo_promedio, edad_comienzo_consumo) 
+INSERT INTO pacientes (DNI, id_paciente, nombre, edad, sexo, peso, ciudad, consumo_promedio, edad_comienzo_consumo) 
 VALUES 
-    (71453722V, 1, 'Bud Abbott', 45, 'Masculino', 80.5, default, 300, 18),
-    (71454398L, 2, 'Lou Costello', 30, 'Masculino', 65.3, 'Burgos', 250, 17),
-    (71456349S, 3, 'Andrés Caraballo', 60, 'Femenino', 70.2, 'Melilla', 400, 13),
-    (71309450C, 4, 'César Ausin' 20, 'Masculino', 68.2, default, 300, 16),
-    (15368752Z, 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18);
+    ('71453722V', 1, 'Bud Abbott', 45, 'Masculino', 80.5, default, 300, 18),
+    ('71454398L', 2, 'Lou Costello', 30, 'Masculino', 65.3, 'Burgos', 250, 17),
+    ('71456349S', 3, 'Andrés Caraballo', 60, 'Femenino', 70.2, 'Melilla', 400, 13),
+    ('71309450C', 4, 'César Ausin', 20, 'Masculino', 68.2, default, 300, 16),
+    ('15368752Z', 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18);
 ")
 
 ```
@@ -101,7 +101,8 @@ Table: 5 records
 # Crear tabla 'diagnostico_medico'
 dbExecute(con, "
 CREATE TABLE diagnostico_medico(
-    DNI CHAR(9) PRIMARY KEY,
+    id_diagnostico smallint PRIMARY KEY,
+    DNI CHAR(9) NOT NULL REFERENCES pacientes(dni),
     id_paciente INTEGER REFERENCES pacientes(id_paciente), -- Clave ajena a 'pacientes'
     fecha DATE NOT NULL,
     enfermedad VARCHAR(40),
@@ -120,10 +121,10 @@ Ahora agregamos valores a las tablas de consultas
 dbExecute(con, "
 INSERT INTO diagnostico_medico (DNI, id_paciente, fecha, enfermedad, hospital, doctor) 
 VALUES 
-    (71453722V, 1, '2024-01-10', 'Hepatitis', default, Shaun Murphy),
-    (71454398L, 2, '2024-02-15', 'Cirrosis', default, Manuel Iván Pérez),
-    (71456349S, 3, '2024-03-01', 'Cirrosis', Hospital universitario La Paz, Manuel Iván Pérez),
-    (15368752Z, 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', Gregory House);
+    (1, '71453722V', 1, '2024-01-10', 'Hepatitis', default, Shaun Murphy),
+    (2, '71454398L', 2, '2024-02-15', 'Cirrosis', default, Manuel Iván Pérez),
+    (3, '71456349S', 3, '2024-03-01', 'Cirrosis', Hospital universitario La Paz, Manuel Iván Pérez),
+    (4, '15368752Z', 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', Gregory House);
 ")
 ```
 
@@ -141,12 +142,12 @@ SELECT * FROM diagnostico_medico;
 
 Table:  records
 
-| DNI       | ID_paciente | Fecha      | Enfermedad   | Hospital                      | Doctor            |
-| --------- | ----------- | ---------- | ------------ | ----------------------------- | ----------------- |
-| 71453722V | 1           | 2024-01-10 | Hepatitis    | default                       | Shaun Murphy      |
-| 71454398L | 2           | 2024-02-15 | Cirrosis     | default                       | Manuel Iván Pérez |
-| 71456349S | 3           | 2024-03-01 | Cirrosis     | Hospital universitario La Paz | Manuel Iván Pérez |
-| 15368752Z | 5           | 2024-03-25 | Pancreatitis | Río Carrión                   | Gregory House     |
+|ID_diagnostico| DNI       | ID_paciente | Fecha      | Enfermedad   | Hospital                      | Doctor            |
+| ------------ | --------- | ----------- | ---------- | ------------ | ----------------------------- | ----------------- |
+| 1            | 71453722V | 1           | 2024-01-10 | Hepatitis    | default                       | Shaun Murphy      |
+| 2            | 71454398L | 2           | 2024-02-15 | Cirrosis     | default                       | Manuel Iván Pérez |
+| 3            | 71456349S | 3           | 2024-03-01 | Cirrosis     | Hospital universitario La Paz | Manuel Iván Pérez |
+| 4            | 15368752Z | 5           | 2024-03-25 | Pancreatitis | Río Carrión                   | Gregory House     |
 
 
 </div>
@@ -158,34 +159,32 @@ Table:  records
 # Crear tabla 'evaluacion_psicologica'
 dbExecute(con, "
 CREATE TABLE evaluacion_psicologica (
-    DNI CHAR(9) PRIMARY KEY,
+    id_evaluacion SERIAL PRIMARY KEY,
+    DNI CHAR(9) NOT NULL REFERENCES pacientes(dni),
     id_paciente INTEGER REFERENCES pacientes(id_paciente), 
     fecha DATE NOT NULL,
-    puntuacion INTERGER CHECK puntuacion > 0 and puntuacion < 10,
-    escala_usada VARCHAR(20) DEFAULT ''
+    puntuacion INTEGER CHECK (puntuacion > 0 and puntuacion < 10),
+    escala_usada VARCHAR(20) DEFAULT '',
     doctor VARCHAR(30),
     CONSTRAINT chk_fecha CHECK (fecha <= CURRENT_DATE) -- La fecha de consulta no puede ser futura
 );
 ")
 ```
 
-Ahora agregamos valores a la tabla de tratamientos
+Ahora agregamos valores a la tabla de las evaluaciones
 
 
 ``` r
 # Insertar datos en 'evaluacion_psicologica'
 dbExecute(con, "
-INSERT INTO evaluacion_psicologica (id_consulta, nombre_tratamiento, duracion_dias, dosis_mg) 
+INSERT INTO evaluacion_psicologica (dni, id_paciente, fecha, puntuacion, escala_usada, doctor) 
 VALUES 
-     (71453722V, 1, '2024-01-10', 'Hepatitis', default, Shaun Murphy),
-    (71454398L, 2, '2024-02-15', 'Cirrosis', default, Manuel Iván Pérez),
-    (71456349S, 3, '2024-03-01', 'Cirrosis', Hospital universitario La Paz, Manuel Iván Pérez),
-    (15368752Z, 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', Gregory House);
+    (1,'71453722V', 1, '2024-01-18', 8, 'AUDIT', 'Shaun Murphy'),
+    (2,'71454398L', 2, '2024-02-20', 6, 'AUDIT-C', 'Manuel Iván Pérez'),
+    (3,'71456349S', 3, '2024-03-10', 9, 'AUDIT', 'Manuel Iván Pérez'),
+    (4,'71309450C', 4, '2024-03-20', 5, 'AUDIT-C', 'Julia González'),
+    (5,'15368752Z', 5, '2024-03-30', 7, 'AUDIT', 'Gregory House');
 ")
-```
-
-```
-## [1] 3
 ```
 
 Mostramos la tabla
@@ -201,11 +200,14 @@ SELECT * FROM evaluacion_psicologica;
 
 Table: 3 records
 
-|id_tratamiento | id_consulta|nombre_tratamiento | duracion_dias| dosis_mg|
-|:--------------|-----------:|:------------------|-------------:|--------:|
-|1              |           1|Enalapril          |            30|     10.5|
-|2              |           2|Metformina         |            60|    850.0|
-|3              |           3|Furosemida         |            15|     40.0|
+| id_evaluacion | DNI        | id_paciente | Fecha       | Puntuación | Escala usada | Doctor              |
+|---------------|------------|-------------|-------------|------------|--------------|---------------------|
+| 1             | 71453722V  | 1           | 2024-01-18  | 8          | AUDIT        | Shaun Murphy        |
+| 2             | 71454398L  | 2           | 2024-02-20  | 6          | AUDIT-C      | Manuel Iván Pérez   |
+| 3             | 71456349S  | 3           | 2024-03-10  | 9          | AUDIT        | Manuel Iván Pérez   |
+| 4             | 71309450C  | 4           | 2024-03-20  | 5          | AUDIT-C      | Julia González      |
+| 5             | 15368752Z  | 5           | 2024-03-30  | 7          | AUDIT        | Gregory House       |
+
 
 </div>
 
