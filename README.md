@@ -1,7 +1,7 @@
 ---
 title: "Seminario Asignatura"
 subtitle: "Bases de Datos"
-author: "Rubén Peña,  Daniel Navajas,  Andrés Carballo"
+author: " Daniel Navajas, Rubén Peña, Andrés Carballo"
 output: 
   html_document:
     keep_md: true
