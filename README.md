@@ -201,15 +201,15 @@ Ahora agregamos valores a la tabla de las evaluaciones
 dbExecute(con, "
 INSERT INTO evaluacion_psicologica (id_evaluacion, DNI, id_paciente, fecha, puntuacion, escala_usada, doctor) 
 VALUES 
-    (1,'71453722V', 1, '2024-01-18', 8, 'AUDIT', 'Shaun Murphy'),
-    (2,'71454398L', 2, '2024-02-20', 6, 'AUDIT-C', 'Manuel Iván Pérez'),
-    (3,'71456349S', 3, '2024-03-10', 9, 'AUDIT', 'Manuel Iván Pérez'),
-    (4,'71309450C', 4, '2024-03-20', 5, 'AUDIT-C', 'Julia González'),
-    (5,'15368752Z', 5, '2024-03-30', 7, 'AUDIT', 'Gregory House');
-    (6, '71459876A', 6, '2024-04-20', 4, 'AUDIT-C', 'Julia González'),
-    (7, '71451234B', 7, '2024-03-05', 9, 'AUDIT',   'Manuel Iván Pérez'),
-    (8, '71451234B', 7, '2024-06-10', 8, 'AUDIT',   'Manuel Iván Pérez'),
-    (9, '71452345C', 8, '2024-06-10', 3, 'AUDIT-C', 'Julia González');
+    (1,'71453722V', 1, '2024-01-18', 8, 'AUDIT', 'Judith Becker'),
+    (2,'71454398L', 2, '2024-02-20', 6, 'AUDIT-C', 'Samuel Vicario'),
+    (3,'71456349S', 3, '2024-03-10', 9, 'AUDIT', 'Patricio Estrella'),
+    (4,'71309450C', 4, '2024-03-20', 5, 'AUDIT-C', 'Judith Becker'),
+    (5,'15368752Z', 5, '2024-03-30', 7, 'AUDIT', 'Marlon');
+    (6, '71459876A', 6, '2024-04-20', 4, 'AUDIT-C', 'Victoria Prieri'),
+    (7, '71451234B', 7, '2024-03-05', 9, 'AUDIT', 'Judith Becker'),
+    (8, '71451234B', 7, '2024-06-10', 8, 'AUDIT', 'Victoria Prieri'),
+    (9, '71452345C', 8, '2024-06-10', 3, 'AUDIT-C', 'Patricio Estrella');
 ")
 ```
 
@@ -226,17 +226,17 @@ SELECT * FROM evaluacion_psicologica;
 
 Table: 3 records
 
-| id_evaluacion | DNI       | id_paciente | Fecha       | Puntuación | Escala usada | Doctor             |
-|---------------|-----------|------------ |------------|----------- |--------------|--------------------|
-| 1             | 71453722V | 1           | 2024-01-18 | 8          | AUDIT        | Shaun Murphy       |
-| 2             | 71454398L | 2           | 2024-02-20 | 6          | AUDIT-C      | Manuel Iván Pérez  |
-| 3             | 71456349S | 3           | 2024-03-10 | 9          | AUDIT        | Manuel Iván Pérez  |
-| 4             | 71309450C | 4           | 2024-03-20 | 5          | AUDIT-C      | Julia González     |
-| 5             | 15368752Z | 5           | 2024-03-30 | 7          | AUDIT        | Gregory House      |
-| 6             | 71459876A | 6           | 2024-04-20 | 4          | AUDIT-C      | Julia González     |
-| 7             | 71451234B | 7           | 2024-03-05 | 9          | AUDIT        | Manuel Iván Pérez  |
-| 8             | 71451234B | 7           | 2024-06-10 | 8          | AUDIT        | Manuel Iván Pérez  |
-| 9             | 71452345C | 8           | 2024-06-10 | 3          | AUDIT-C      | Julia González     |
+| id_evaluacion | DNI        | id_paciente | Fecha       | Puntuación | Escala usada | Doctor            |
+|---------------|------------|-------------|-------------|------------|--------------|-------------------|
+| 1             | 71453722V  | 1           | 2024-01-18  | 8          | AUDIT        | Judith Becker     |
+| 2             | 71454398L  | 2           | 2024-02-20  | 6          | AUDIT-C      | Samuel Vicario    |
+| 3             | 71456349S  | 3           | 2024-03-10  | 9          | AUDIT        | Patricio Estrella |
+| 4             | 71309450C  | 4           | 2024-03-20  | 5          | AUDIT-C      | Judith Becker     |
+| 5             | 15368752Z  | 5           | 2024-03-30  | 7          | AUDIT        | Marlon            |
+| 6             | 71459876A  | 6           | 2024-04-20  | 4          | AUDIT-C      | Victoria Prieri   |
+| 7             | 71451234B  | 7           | 2024-03-05  | 9          | AUDIT        | Judith Becker     |
+| 8             | 71451234B  | 7           | 2024-06-10  | 8          | AUDIT        | Victoria Prieri   |
+| 9             | 71452345C  | 8           | 2024-06-10  | 3          | AUDIT-C      | Patricio Estrella |
 
 
 </div>
