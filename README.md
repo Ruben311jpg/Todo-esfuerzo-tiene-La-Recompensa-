@@ -101,7 +101,7 @@ Table: 5 records
 ``` r
 # Crear tabla 'diagnostico_medico'
 dbExecute(con, "
-CREATE TABLE consultas (
+CREATE TABLE diagnostico_medico(
     DNI CHAR(9) PRIMARY KEY,
     id_paciente INTEGER REFERENCES pacientes(id_paciente), -- Clave ajena a 'pacientes'
     fecha DATE NOT NULL,
