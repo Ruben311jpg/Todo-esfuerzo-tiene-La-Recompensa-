@@ -39,7 +39,7 @@ Contendrá los datos de los pacientes.
 dbExecute(con, "
 CREATE TABLE pacientes (
     DNI CHAR(9) UNIQUE,
-    id_paciente SERIAL PRIMARY KEY,
+    id_paciente SMALLINT PRIMARY KEY,
     nombre VARCHAR(100),
     edad INTEGER CHECK (edad >= 0), -- La edad no puede ser negativa
     sexo VARCHAR(10) CHECK (sexo IN ('Masculino', 'Femenino')), -- Género debe ser uno de estos valores
@@ -59,7 +59,7 @@ Ahora agregamos los datos de los pacientes
 ``` r
 # Insertar datos en 'pacientes'
 dbExecute(con, "
-INSERT INTO pacientes (DNI, id_paciente, nombre, edad, sexo, peso, ciudad, consumo_promedio, edad_comienzo_consumo) 
+INSERT INTO pacientes (DNI, id_paciente, nombre, edad, sexo, peso, ciudad, consumo_promedio_ml, edad_comienzo_consumo) 
 VALUES 
     ('71453722V', 1, 'Bud Abbott', 45, 'Masculino', 80.5, default, 300, 18),
     ('71454398L', 2, 'Lou Costello', 30, 'Masculino', 65.3, 'Burgos', 250, 17),
@@ -119,12 +119,12 @@ Ahora agregamos valores a las tablas de consultas
 ``` r
 # Insertar datos en 'diagnostico_medico'
 dbExecute(con, "
-INSERT INTO diagnostico_medico (DNI, id_paciente, fecha, enfermedad, hospital, doctor) 
+INSERT INTO diagnostico_medico (id_diagnostico, DNI, id_paciente, fecha, enfermedad, hospital, doctor) 
 VALUES 
-    (1, '71453722V', 1, '2024-01-10', 'Hepatitis', default, Shaun Murphy),
-    (2, '71454398L', 2, '2024-02-15', 'Cirrosis', default, Manuel Iván Pérez),
-    (3, '71456349S', 3, '2024-03-01', 'Cirrosis', Hospital universitario La Paz, Manuel Iván Pérez),
-    (4, '15368752Z', 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', Gregory House);
+    (1, '71453722V', 1, '2024-01-10', 'Hepatitis', default, 'Shaun Murphy'),
+    (2, '71454398L', 2, '2024-02-15', 'Cirrosis', default, 'Manuel Iván Pérez'),
+    (3, '71456349S', 3, '2024-03-01', 'Cirrosis', 'Hospital universitario La Paz', 'Manuel Iván Pérez'),
+    (4, '15368752Z', 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', 'Gregory House');
 ")
 ```
 
@@ -159,7 +159,7 @@ Table:  records
 # Crear tabla 'evaluacion_psicologica'
 dbExecute(con, "
 CREATE TABLE evaluacion_psicologica (
-    id_evaluacion SERIAL PRIMARY KEY,
+    id_evaluacion SMALLINT PRIMARY KEY,
     DNI CHAR(9) NOT NULL REFERENCES pacientes(dni),
     id_paciente INTEGER REFERENCES pacientes(id_paciente), 
     fecha DATE NOT NULL,
@@ -177,7 +177,7 @@ Ahora agregamos valores a la tabla de las evaluaciones
 ``` r
 # Insertar datos en 'evaluacion_psicologica'
 dbExecute(con, "
-INSERT INTO evaluacion_psicologica (dni, id_paciente, fecha, puntuacion, escala_usada, doctor) 
+INSERT INTO evaluacion_psicologica (id_evaluacion, DNI, id_paciente, fecha, puntuacion, escala_usada, doctor) 
 VALUES 
     (1,'71453722V', 1, '2024-01-18', 8, 'AUDIT', 'Shaun Murphy'),
     (2,'71454398L', 2, '2024-02-20', 6, 'AUDIT-C', 'Manuel Iván Pérez'),
