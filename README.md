@@ -8,7 +8,6 @@ output:
     self_contained: true
 ---
 
-
 ## Introducción
 
 Se va a trabajar con tres **relaciones** asociadas al consumo de alcohol y sus enfermedades causadas en diversos pacientes. 
