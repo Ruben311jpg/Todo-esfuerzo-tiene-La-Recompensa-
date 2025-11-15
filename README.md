@@ -47,8 +47,8 @@ CREATE TABLE pacientes (
     sexo VARCHAR(10) CHECK (genero IN ('Masculino', 'Femenino')), -- Género debe ser uno de estos valores
     peso DECIMAL(5,2) CHECK (peso > 0), -- Peso debe ser mayor a 0
     ciudad VARCHAR(30) DEFAULT 'Burgos',
-    consumo_promedio_ml/semana smallint CHECK (consumo_promedio_ml > 0),
-    edad_comienzo_consumo smallint
+    consumo_promedio smallint CHECK (consumo_promedio_ml > 0), -- Consumo de alcohol medido en mililitros/semana
+    edad_comienzo_consumo smallint -- Edad a la que empezó a consumir alcohol
 );
 ")
 ```
@@ -61,7 +61,7 @@ Ahora agregamos los datos de los pacientes
 ``` r
 # Insertar datos en 'pacientes'
 dbExecute(con, "
-INSERT INTO pacientes (nombre, edad, genero, peso, altura) 
+INSERT INTO pacientes (DNI, id_paciente, nombre, edad, genero, peso, ciudad, consumo_promedio, edad_comienzo_consumo) 
 VALUES 
     (71453722V, 1, 'Bud Abbott', 45, 'Masculino', 80.5, default, 300, 18),
     (71454398L, 2, 'Lou Costello', 30, 'Masculino', 65.3, 'Burgos', 250, 17),
@@ -103,7 +103,7 @@ Table: 5 records
 # Crear tabla 'diagnostico_medico'
 dbExecute(con, "
 CREATE TABLE consultas (
-    DNI SERIAL PRIMARY KEY,
+    DNI CHAR(9) PRIMARY KEY,
     id_paciente INTEGER REFERENCES pacientes(id_paciente), -- Clave ajena a 'pacientes'
     fecha DATE NOT NULL,
     enfermedad VARCHAR(40),
@@ -118,9 +118,9 @@ Ahora agregamos valores a las tablas de consultas
 
 
 ``` r
-# Insertar datos en 'consultas'
+# Insertar datos en 'diagnostico_medico'
 dbExecute(con, "
-INSERT INTO consultas (id_paciente, fecha, diagnostico) 
+INSERT INTO diagnostico_medico (DNI, id_paciente, fecha, enfermedad, hospital, doctor) 
 VALUES 
     (71453722V, 1, '2024-01-10', 'Hepatitis', default, Shaun Murphy),
     (71454398L, 2, '2024-02-15', 'Cirrosis', default, Manuel Iván Pérez),
@@ -134,7 +134,7 @@ Mostramos la tabla
 
 
 ``` sql
-SELECT * FROM consultas; 
+SELECT * FROM diagnostico_medico; 
 ```
 
 
@@ -157,33 +157,32 @@ Table:  records
 
 
 ``` r
-# Crear tabla 'tratamientos'
+# Crear tabla 'evaluacion_psicologica'
 dbExecute(con, "
-CREATE TABLE tratamientos (
-    id_tratamiento SERIAL PRIMARY KEY,
-    id_consulta INTEGER REFERENCES consultas(id_consulta), -- Clave foránea a 'consultas'
-    nombre_tratamiento VARCHAR(100) NOT NULL,
-    duracion_dias INTEGER CHECK (duracion_dias > 0), -- La duración del tratamiento debe ser mayor a 0
-    dosis_mg DECIMAL(5,2) CHECK (dosis_mg > 0) -- La dosis debe ser mayor a 0
+CREATE TABLE evaluacion_psicologica (
+    DNI CHAR(9) PRIMARY KEY,
+    id_paciente INTEGER REFERENCES pacientes(id_paciente), 
+    fecha DATE NOT NULL,
+    puntuacion INTERGER CHECK puntuacion > 0 and puntuacion < 10,
+    escala_usada VARCHAR(20) DEFAULT ''
+    doctor VARCHAR(30),
+    CONSTRAINT chk_fecha CHECK (fecha <= CURRENT_DATE) -- La fecha de consulta no puede ser futura
 );
 ")
-```
-
-```
-## [1] 0
 ```
 
 Ahora agregamos valores a la tabla de tratamientos
 
 
 ``` r
-# Insertar datos en 'tratamientos'
+# Insertar datos en 'evaluacion_psicologica'
 dbExecute(con, "
-INSERT INTO tratamientos (id_consulta, nombre_tratamiento, duracion_dias, dosis_mg) 
+INSERT INTO evaluacion_psicologica (id_consulta, nombre_tratamiento, duracion_dias, dosis_mg) 
 VALUES 
-    (1, 'Enalapril', 30, 10.5),
-    (2, 'Metformina', 60, 850.0),
-    (3, 'Furosemida', 15, 40.0);
+     (71453722V, 1, '2024-01-10', 'Hepatitis', default, Shaun Murphy),
+    (71454398L, 2, '2024-02-15', 'Cirrosis', default, Manuel Iván Pérez),
+    (71456349S, 3, '2024-03-01', 'Cirrosis', Hospital universitario La Paz, Manuel Iván Pérez),
+    (15368752Z, 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', Gregory House);
 ")
 ```
 
@@ -195,7 +194,7 @@ Mostramos la tabla
 
 
 ``` sql
-SELECT * FROM tratamientos; 
+SELECT * FROM evaluacion_psicologica; 
 ```
 
 
@@ -214,8 +213,7 @@ Table: 3 records
 
 ### Pregunta 1
 
-1.  ¿Cuáles son los nombres de los pacientes y los tratamientos que están recibiendo?
-
+1.  ¿Con qué edad empezó a consumir cada paciente?
 
 ``` sql
 SELECT pacientes.nombre, tratamientos.nombre_tratamiento
@@ -240,7 +238,7 @@ Table: 3 records
 
 ### Pregunta 2
 
-2.  Cuántas consultas han sido diagnosticadas con cada tipo de diagnóstico?
+2.  ¿Cuántos pacientes fueron diagnosticados con las diferentes enfermedades?
 
 
 ``` sql
@@ -265,7 +263,7 @@ Table: 3 records
 
 ### Pregunta 3
 
-3.  ¿Cuál es la dosis promedio de tratamiento que están recibiendo los pacientes en cada diagnóstico?
+3.  ¿Cuál es la puntuación promedio que obtienen los pacientes en cada evaluación?
 
 
 ``` sql
