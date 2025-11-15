@@ -139,7 +139,7 @@ VALUES
     (7, '71451234B', 7, '2024-05-15', 'Encefalopatía hepática', 'HUBU', 'Manuel Iván Pérez'),
     (8, '71452345C', 8, '2024-06-01', 'Trastorno de ansiedad','12 de Octubre', 'Julia González'),
     (9,  '71453421D', 9,  '2024-07-15', 'Hígado graso alcohólico', 'HUBU', 'Julia González'),
-    (10, '71455678E', 10, '2024-08-01', 'Gastritis alcohólica',    'HUBU', 'Shaun Murphy');
+    (10, '71455678E', 10, '2024-08-01', 'Gastritis alcohólica', default, 'Shaun Murphy');
 ")
 ```
 
@@ -186,7 +186,7 @@ CREATE TABLE evaluacion_psicologica (
     id_paciente SMALLINT REFERENCES pacientes(id_paciente), 
     fecha DATE NOT NULL,
     puntuacion INTEGER CHECK (puntuacion >= 0 and puntuacion <= 10),
-    escala_usada VARCHAR(20) DEFAULT '',
+    escala_usada VARCHAR(20) DEFAULT 'AUDIT',
     doctor VARCHAR(30),
     CONSTRAINT chk_fecha CHECK (fecha <= CURRENT_DATE) -- La fecha de consulta no puede ser futura
 );
@@ -201,11 +201,11 @@ Ahora agregamos valores a la tabla de las evaluaciones
 dbExecute(con, "
 INSERT INTO evaluacion_psicologica (id_evaluacion, DNI, id_paciente, fecha, puntuacion, escala_usada, doctor) 
 VALUES 
-    (1,'71453722V', 1, '2024-01-18', 8, 'AUDIT', 'Judith Becker'),
+    (1,'71453722V', 1, '2024-01-18', 8, default, 'Judith Becker'),
     (2,'71454398L', 2, '2024-02-20', 6, 'AUDIT-C', 'Samuel Vicario'),
     (3,'71456349S', 3, '2024-03-10', 9, 'AUDIT', 'Patricio Estrella'),
     (4,'71309450C', 4, '2024-03-20', 5, 'AUDIT-C', 'Judith Becker'),
-    (5,'15368752Z', 5, '2024-03-30', 7, 'AUDIT', 'Marlon');
+    (5,'15368752Z', 5, '2024-03-30', 7, default, 'Marlon');
     (6, '71459876A', 6, '2024-04-20', 4, 'AUDIT-C', 'Victoria Prieri'),
     (7, '71451234B', 7, '2024-03-05', 9, 'AUDIT', 'Judith Becker'),
     (8, '71451234B', 7, '2024-06-10', 8, 'AUDIT', 'Victoria Prieri'),
