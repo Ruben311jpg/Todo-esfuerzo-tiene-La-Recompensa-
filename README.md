@@ -38,7 +38,7 @@ Contendrá los datos de los pacientes.
 # Crear tabla 'pacientes'
 dbExecute(con, "
 CREATE TABLE pacientes (
-    DNI CHAR(9) UNIQUE,
+    DNI CHAR(9) UNIQUE NOT NULL,
     id_paciente SMALLINT PRIMARY KEY,
     nombre VARCHAR(100),
     edad INTEGER CHECK (edad >= 0), -- La edad no puede ser negativa
