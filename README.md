@@ -251,10 +251,9 @@ Table: 3 records
 1.  ¿Con qué edad empezó a consumir cada paciente?
 
 ``` sql
-SELECT pacientes.nombre, tratamientos.nombre_tratamiento
-FROM pacientes 
-JOIN consultas ON pacientes.id_paciente = consultas.id_paciente
-JOIN tratamientos ON consultas.id_consulta = tratamientos.id_consulta;
+SELECT nombre, edad_comienzo_consumo
+FROM pacientes;
+
 ```
 
 
@@ -263,11 +262,18 @@ JOIN tratamientos ON consultas.id_consulta = tratamientos.id_consulta;
 
 Table: 3 records
 
-|nombre          |nombre_tratamiento |
-|:---------------|:------------------|
-|Juan Pérez      |Enalapril          |
-|Ana López       |Metformina         |
-|Carlos Martínez |Furosemida         |
+|nombre             |nombre_tratamiento |
+|:------------------|:------------------|
+|Bud Abbott         |                 18|
+|Lou Costello       |                 17|
+|Andrés Caraballo   |                 13|
+|César Ausin        |                 16|
+|Gonzalo Villacorta |                 18|
+|María López        |                 12|
+|Javier Martín      |                 16|
+Lucía Sánchez       |                 18|
+|Sergio Ortega      |                 20|
+|Elena Martínez     |                 18|
 
 </div>
 
@@ -277,9 +283,10 @@ Table: 3 records
 
 
 ``` sql
-SELECT consultas.diagnostico, COUNT(consultas.id_consulta) AS total_consultas
-FROM consultas 
-GROUP BY consultas.diagnostico;
+SELECT enfermedad,
+COUNT (DISTINCT id_paciente) as num_pacientes
+FROM diagnostico_medico 
+GROUP BY enfermedad;
 ```
 
 
@@ -290,9 +297,14 @@ Table: 3 records
 
 |diagnostico            | total_consultas|
 |:----------------------|---------------:|
-|Insuficiencia Cardíaca |               1|
-|Hipertensión           |               1|
-|Diabetes Tipo 2        |               1|
+|Cirrosis               |               3|
+|Encefalopatía hepática |               1|
+|Gastritis              |               1|
+|Gastritis alcohólica   |               1|
+|Hepatitis              |               1|
+|Hígado graso alcohólico|               1|
+|Pancreatitis           |               1|
+|Trastorno de ansiedad  |               1|
 
 </div>
 
