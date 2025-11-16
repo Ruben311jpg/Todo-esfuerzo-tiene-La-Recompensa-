@@ -66,11 +66,11 @@ VALUES
     ('71456349S', 3, 'Andrés Caraballo', 60, 'Femenino', 70.2, 'Melilla', 400, 13),
     ('71309450C', 4, 'César Ausin', 20, 'Masculino', 68.2, default, 300, 16),
     ('15368752Z', 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18);
-    ('71459876A', 6, 'María López',       27, 'Femenino',  62.0, 'Burgos',     120, 12),
-    ('71451234B', 7, 'Javier Martín',     50, 'Masculino', 88.3, 'Valladolid', 500, 16),
-    ('71452345C', 8, 'Lucía Sánchez',     22, 'Femenino',  55.1, 'Burgos',      80, 18);
-    ('71453421D', 9,  'Sergio Ortega',     41, 'Masculino', 82.0,  'León',     220, 20),
-    ('71455678E', 10, 'Elena Martínez',    33, 'Femenino',  59.5,  'Burgos',   150, 18);
+    ('71459876A', 6, 'María López',27, 'Femenino',62.0, 'Burgos',120, 12),
+    ('71451234B', 7, 'Javier Martín',50, 'Masculino', 88.3, 'Valladolid', 500, 16),
+    ('71452345C', 8, 'Lucía Sánchez',22, 'Femenino',  55.1, 'Burgos',80, 18);
+    ('71453421D', 9,  'Sergio Ortega', 41, 'Masculino', 82.0,  'León', 220, 20),
+    ('71455678E', 10, 'Elena Martínez',33, 'Femenino',  59.5,  'Burgos', 150, 18);
 ")
 
 ```
