@@ -65,10 +65,10 @@ VALUES
     ('71454398L', 2, 'Lou Costello', 30, 'Masculino', 65.3, 'Burgos', 250, 17),
     ('71456349S', 3, 'Andrés Caraballo', 60, 'Femenino', 70.2, 'Melilla', 400, 13),
     ('71309450C', 4, 'César Ausin', 20, 'Masculino', 68.2, default, 300, 16),
-    ('15368752Z', 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18);
+    ('15368752Z', 5, 'Gonzalo Villacorta', 65, 'Masculino', 75.4, 'Palencia', 190, 18),
     ('71459876A', 6, 'María López',27, 'Femenino',62.0, 'Burgos',120, 12),
     ('71451234B', 7, 'Javier Martín',50, 'Masculino', 88.3, 'Valladolid', 500, 16),
-    ('71452345C', 8, 'Lucía Sánchez',22, 'Femenino',  55.1, 'Burgos',80, 18);
+    ('71452345C', 8, 'Lucía Sánchez',22, 'Femenino',  55.1, 'Burgos',80, 18),
     ('71453421D', 9,  'Sergio Ortega', 41, 'Masculino', 82.0,  'León', 220, 20),
     ('71455678E', 10, 'Elena Martínez',33, 'Femenino',  59.5,  'Burgos', 150, 18);
 ")
@@ -111,7 +111,7 @@ Table: 5 records
 dbExecute(con, "
 CREATE TABLE diagnostico_medico(
     id_diagnostico smallint PRIMARY KEY,
-    DNI CHAR(9) NOT NULL REFERENCES pacientes(dni),
+    DNI CHAR(9) NOT NULL,
     id_paciente SMALLINT REFERENCES pacientes(id_paciente), -- Clave ajena a 'pacientes'
     fecha DATE NOT NULL,
     enfermedad VARCHAR(40),
@@ -131,9 +131,9 @@ dbExecute(con, "
 INSERT INTO diagnostico_medico (id_diagnostico, DNI, id_paciente, fecha, enfermedad, hospital, doctor) 
 VALUES 
     (1, '71453722V', 1, '2024-01-10', 'Hepatitis', default, 'Shaun Murphy'),
-    (2, '71454398L', 2, '2024-02-15', 'Cirrosis', HUBU, 'Manuel Iván Pérez'),
+    (2, '71454398L', 2, '2024-02-15', 'Cirrosis', 'HUBU', 'Manuel Iván Pérez'),
     (3, '71456349S', 3, '2024-03-01', 'Cirrosis', 'Hospital universitario La Paz', 'Manuel Iván Pérez'),
-    (4, '15368752Z', 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', 'Gregory House');
+    (4, '15368752Z', 5, '2024-03-25', 'Pancreatitis', 'Río Carrión', 'Gregory House'),
     (5, '71459876A', 6, '2024-04-10', 'Gastritis','12 de Octubre', 'Julia González'),
     (6, '71451234B', 7, '2024-02-28', 'Cirrosis','HUBU', 'Manuel Iván Pérez'),
     (7, '71451234B', 7, '2024-05-15', 'Encefalopatía hepática', 'HUBU', 'Manuel Iván Pérez'),
@@ -182,7 +182,7 @@ Table:  records
 dbExecute(con, "
 CREATE TABLE evaluacion_psicologica (
     id_evaluacion SMALLINT PRIMARY KEY,
-    DNI CHAR(9) NOT NULL REFERENCES pacientes(dni),
+    DNI CHAR(9) NOT NULL,
     id_paciente SMALLINT REFERENCES pacientes(id_paciente), 
     fecha DATE NOT NULL,
     puntuacion INTEGER CHECK (puntuacion >= 0 and puntuacion <= 10),
@@ -205,7 +205,7 @@ VALUES
     (2,'71454398L', 2, '2024-02-20', 6, 'AUDIT-C', 'Samuel Vicario'),
     (3,'71456349S', 3, '2024-03-10', 9, 'AUDIT', 'Patricio Estrella'),
     (4,'71309450C', 4, '2024-03-20', 5, 'AUDIT-C', 'Judith Becker'),
-    (5,'15368752Z', 5, '2024-03-30', 7, default, 'Marlon');
+    (5,'15368752Z', 5, '2024-03-30', 7, default, 'Marlon'),
     (6, '71459876A', 6, '2024-04-20', 4, 'AUDIT-C', 'Victoria Prieri'),
     (7, '71451234B', 7, '2024-03-05', 9, 'AUDIT', 'Judith Becker'),
     (8, '71451234B', 7, '2024-06-10', 8, 'AUDIT', 'Victoria Prieri'),
