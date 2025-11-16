@@ -283,8 +283,7 @@ Lucía Sánchez       |                 18|
 
 
 ``` sql
-SELECT enfermedad,
-COUNT (DISTINCT id_paciente) as num_pacientes
+SELECT enfermedad, COUNT (DISTINCT id_paciente) as num_pacientes
 FROM diagnostico_medico 
 GROUP BY enfermedad;
 ```
@@ -314,10 +313,10 @@ Table: 3 records
 
 
 ``` sql
-SELECT consultas.diagnostico, AVG(tratamientos.dosis_mg) AS dosis_promedio
-FROM consultas 
-JOIN tratamientos ON consultas.id_consulta = tratamientos.id_consulta
-GROUP BY consultas.diagnostico;
+SELECT id_paciente, AVG(puntuacion) as promedio
+FROM evaluacion_psicologica 
+GROUP BY id_paciente
+ORDER BY id_paciente;
 ```
 
 
@@ -326,11 +325,17 @@ GROUP BY consultas.diagnostico;
 
 Table: 3 records
 
-|diagnostico            | dosis_promedio|
-|:----------------------|--------------:|
-|Insuficiencia Cardíaca |           40.0|
-|Hipertensión           |           10.5|
-|Diabetes Tipo 2        |          850.0|
+|id_paciente            |          promedio|
+|:----------------------|-----------------:|
+|1                      |8.0000000000000000|
+|2                      |6.0000000000000000|
+|3                      |9.0000000000000000|             
+|4                      |5.0000000000000000|
+|5                      |7.0000000000000000|
+|6                      |4.0000000000000000|
+|7                      |8.5000000000000000|
+|8                      |3.0000000000000000|
+
 
 </div>
 
