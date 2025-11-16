@@ -288,29 +288,41 @@ Table: 3 records
 
 2.  Diagnósticos alcohólicos vs no alcohólicos.
 
+Se quieren clasificar los diagnósticos realizados a los pacientes en dos grupos. Diagnósticos propios del alcoholismo o diagnósticos que no tienen por qué ser propios del alcoholismo. Para cada paciente se contabilizarán el número total de diagnósticos, ya que un mismo paciente podrá ser diagnosticado más de una vez. Se clasificarán cada uno de esos diagnósticos de la forma anteriormente explicada.
+
 
 ``` sql
-SELECT enfermedad, COUNT (DISTINCT id_paciente) as num_pacientes
-FROM diagnostico_medico 
-GROUP BY enfermedad;
+SELECT p.nombre,
+  COUNT (*) as total_diagnosticos,
+  COUNT (CASE
+          WHEN d.enfermedad IN ('Cirrosis', 'Hepatitis', 'Pancreatitis', 'Gastritis alcohólica', 'Hígado graso alcohólico', 'Encefalopatía hepática'),
+            then 1 END) AS total_alcoholicos,
+  COUNT (CASE
+          WHEN d.enfermedad IN ('Gastritis', 'Trastorno de asiedad')
+            then 1 END) AS total_no_alcoholicos
+FROM pacientes p
+JOIN diagnostico_medico d
+ON p.id_paciente = d.id_paciente 
+GROUP BY p.id_paciente, p.nombre;
 ```
 
 
 <div class="knitsql-table">
 
 
-Table: 3 records
 
-|diagnostico            | total_consultas|
-|:----------------------|---------------:|
-|Cirrosis               |               3|
-|Encefalopatía hepática |               1|
-|Gastritis              |               1|
-|Gastritis alcohólica   |               1|
-|Hepatitis              |               1|
-|Hígado graso alcohólico|               1|
-|Pancreatitis           |               1|
-|Trastorno de ansiedad  |               1|
+| nombre             | total_diagnosticos | total_alcoholicos | total_no_alcoholicos   |
+|:-------------------|:-------------------|:-------------------|:----------------------|
+| Sergio Ortega      | 1                  | 1                  | 0                     |
+| Andrés Caraballo   | 1                  | 1                  | 0                     |
+| Gonzalo Villacorta | 1                  | 1                  | 0                     |
+| Elena Martínez     | 1                  | 1                  | 0                     |
+| María López        | 1                  | 0                  | 1                     |
+| Lou Costello       | 1                  | 1                  | 0                     |
+| Javier Martín      | 2                  | 2                  | 0                     |
+| Bud Abbott         | 1                  | 1                  | 0                     |
+| Lucía Sánchez      | 1                  | 0                  | 0                     |
+
 
 </div>
 
