@@ -248,12 +248,22 @@ Table: 3 records
 
 ### Pregunta 1
 
-1.  ¿Con qué edad empezó a consumir cada paciente?
+1.  Consumo de riesgo por ciudad.
+   
+Se contará el número total de pacientes que hay en cada ciudad. Además se realaizará una clasificación entre pacientes los pacientes que son de riesgo y los que no. Esta
+clasificación se realizará en función del consumo promedio en ml de cada paciente.
+El resultado final mostrado en la relación será la cantidad de pacientes por cada ciudad y de entre ellos cuales son de riesgo y cuales no.
 
 ``` sql
-SELECT nombre, edad_comienzo_consumo
-FROM pacientes;
-
+SELECT ciudad,
+  COUNT (*) as total_pacientes,
+  COUNT (CASE
+            WHEN consumo_promedio_ml >= 300 then 1 end) as pacientes_riesgo,
+  COUNT (Case
+            WHEN consumo_promedio_ml < 300 then 1 end) as pacientes_no_riesgo
+FROM pacientes
+GROUP BY ciudad
+ORDER BY ciudad;
 ```
 
 
@@ -262,24 +272,21 @@ FROM pacientes;
 
 Table: 3 records
 
-|nombre             |nombre_tratamiento |
-|:------------------|:------------------|
-|Bud Abbott         |                 18|
-|Lou Costello       |                 17|
-|Andrés Caraballo   |                 13|
-|César Ausin        |                 16|
-|Gonzalo Villacorta |                 18|
-|María López        |                 12|
-|Javier Martín      |                 16|
-Lucía Sánchez       |                 18|
-|Sergio Ortega      |                 20|
-|Elena Martínez     |                 18|
+| ciudad     | total_pacientes | pacientes_riesgo | pacientes_no_riesgo  |
+|:-----------|:----------------|:-----------------|:---------------------|
+| Burgos     | 6               | 2                | 4                    |
+| León       | 1               | 0                | 1                    |
+| Melilla    | 1               | 1                | 0                    |
+| Palencia   | 1               | 0                | 1                    |
+| Valladolid | 1               | 1                | 0                    |
+
+
 
 </div>
 
 ### Pregunta 2
 
-2.  ¿Cuántos pacientes fueron diagnosticados con las diferentes enfermedades?
+2.  Diagnósticos alcohólicos vs no alcohólicos.
 
 
 ``` sql
@@ -309,7 +316,7 @@ Table: 3 records
 
 ### Pregunta 3
 
-3.  ¿Cuál es la puntuación promedio que obtienen los pacientes en cada evaluación?
+3.  Evaluaciones "altas" vs "bajas" por paciente.
 
 
 ``` sql
