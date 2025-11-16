@@ -340,9 +340,7 @@ Table: 3 records
 </div>
 
 # Esquema de la base de datos
-![Esquema](<img width="882" height="627" alt="esquemaBBDD" src="https://github.com/user-attachments/assets/5859f7e3-7e3e-4cfd-b1ef-ea81f768b311" />
-)
-
+![Esquema](https://github.com/user-attachments/assets/5859f7e3-7e3e-4cfd-b1ef-ea81f768b311)
 
 # Finalizando el documento
 
