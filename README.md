@@ -332,7 +332,7 @@ GROUP BY p.id_paciente, p.nombre;
 
 
 ``` sql
-SELECT id_paciente, AVG(puntuacion) as promedio
+SELECT id_paciente, ROUND(AVG(puntuacion), 2) as promedio
 FROM evaluacion_psicologica 
 GROUP BY id_paciente
 ORDER BY id_paciente;
@@ -346,14 +346,14 @@ Table: 3 records
 
 |id_paciente            |          promedio|
 |:----------------------|-----------------:|
-|1                      |8.0000000000000000|
-|2                      |6.0000000000000000|
-|3                      |9.0000000000000000|             
-|4                      |5.0000000000000000|
-|5                      |7.0000000000000000|
-|6                      |4.0000000000000000|
-|7                      |8.5000000000000000|
-|8                      |3.0000000000000000|
+|1                      |8.00              |
+|2                      |6.00              |
+|3                      |9.00              |             
+|4                      |5.00              |
+|5                      |7.00              |
+|6                      |4.00              |
+|7                      |8.50              |
+|8                      |3.00              |
 
 
 </div>
