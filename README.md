@@ -87,7 +87,7 @@ SELECT * FROM pacientes;
 <div class="knitsql-table">
 
 
-Table: 5 records
+Table: 10 records
 
 | DNI       | id_paciente | Nombre             | Edad | Sexo      | Peso | Ciudad     | Consumo actual   | Edad inicio |
 |-----------|-------------|--------------------|------|-----------|------|------------|------------------|-------------|
@@ -158,7 +158,7 @@ SELECT * FROM diagnostico_medico;
 <div class="knitsql-table">
 
 
-Table:  records
+Table: 10 records
 
 | id_diagnostico | DNI        | id_paciente | Fecha       | Enfermedad                | Hospital                      | Doctor             |
 |----------------|------------|-------------|-------------|---------------------------|-------------------------------|--------------------|
@@ -229,7 +229,7 @@ SELECT * FROM evaluacion_psicologica;
 <div class="knitsql-table">
 
 
-Table: 3 records
+Table: 9 records
 
 | id_evaluacion | DNI        | id_paciente | Fecha       | Puntuación | Escala usada | Doctor            |
 |---------------|------------|-------------|-------------|------------|--------------|-------------------|
