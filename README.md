@@ -19,9 +19,10 @@ Se va a trabajar con tres **relaciones** asociadas al consumo de alcohol y sus e
 
 A continuación se responderán las siguientes preguntas:
 
-1.  ¿Con qué edad empezó a consumir cada paciente?
-2.  ¿Cuántos pacientes fueron diagnosticados con las diferentes enfermedades?
-3.  ¿Cuál es la puntuación promedio que obtienen los pacientes en cada evaluación?
+1.  **Tabla pacientes**: Contendrá los datos de los paciente incluyendo la cantidad media de consumo de alcohol y edad de inicio de consumo.
+2.  **¿Cuál es el número total de diagnósticos, el número de diagnósticos relacionados con el alcohol y el número de diagnósticos no relacionados con el alcohol que presenta cada paciente?
+3.  **¿Cuántas evaluaciones psicológicas tiene cada paciente, cuántas de ellas presentan puntuación alta, cuántas presentan puntuación baja y cuál es su puntuación media?
+## Objetivos/Preguntas
 
 ## Metodología y Resultados
 
