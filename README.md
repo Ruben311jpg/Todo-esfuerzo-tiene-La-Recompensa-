@@ -270,7 +270,7 @@ ORDER BY ciudad;
 <div class="knitsql-table">
 
 
-Table: 3 records
+Table:
 
 | ciudad     | total_pacientes | pacientes_riesgo | pacientes_no_riesgo  |
 |:-----------|:----------------|:-----------------|:---------------------|
@@ -309,7 +309,7 @@ GROUP BY p.id_paciente, p.nombre;
 
 <div class="knitsql-table">
 
-
+Table:
 
 | nombre             | total_diagnosticos | total_alcoholicos | total_no_alcoholicos   |
 |:-------------------|:-------------------|:-------------------|:----------------------|
@@ -330,30 +330,41 @@ GROUP BY p.id_paciente, p.nombre;
 
 3.  Evaluaciones "altas" vs "bajas" por paciente.
 
+Para cada paciente que tenga al menos una evaluación psicológica se mostrará el nombre de dicho paciente, el número total de evaluaciones que tiene, cuantas de ellas tienen una puntuación "alta" y cuantas tienen una puntuación "baja". También se mostrará la media de las todas las puntuaciones de cada paciente.
 
 ``` sql
-SELECT id_paciente, ROUND(AVG(puntuacion), 2) as promedio
-FROM evaluacion_psicologica 
-GROUP BY id_paciente
-ORDER BY id_paciente;
+SELECT p.nombre,
+	COUNT (*) as total_evaluaciones,
+	COUNT (CASE
+			WHEN e.puntuacion >= 8 THEN 1 END) AS total_altas,
+	COUNT (CASE
+			WHEN e.puntuacion <8 THEN 1 END) AS total_bajas,
+	AVG(e.puntuacion) AS promedio_evaluaciones
+		
+FROM pacientes p
+JOIN evaluacion_psicologica e
+ON p.id_paciente = e.id_paciente
+GROUP BY p.id_paciente, p.nombre
+ORDER BY p.id_paciente;
 ```
 
 
 <div class="knitsql-table">
 
 
-Table: 3 records
+Table:
 
-|id_paciente            |          promedio|
-|:----------------------|-----------------:|
-|1                      |8.00              |
-|2                      |6.00              |
-|3                      |9.00              |             
-|4                      |5.00              |
-|5                      |7.00              |
-|6                      |4.00              |
-|7                      |8.50              |
-|8                      |3.00              |
+| nombre             | total_evaluaciones | total_altas | total_bajas | promedio_evaluaciones  |
+|:-------------------|:-------------------|:------------|:------------|:-----------------------|
+| Bud Abbott         | 1                  | 1           | 0           | 8.0                    |
+| Lou Costello       | 1                  | 0           | 1           | 6.0                    |
+| Andrés Caraballo   | 1                  | 1           | 0           | 9.0                    |
+| César Ausin        | 1                  | 0           | 1           | 5.0                    |
+| Gonzalo Villacorta | 1                  | 1           | 0           | 7.0                    |
+| María López        | 1                  | 0           | 1           | 4.0                    |
+| Javier Martín      | 2                  | 2           | 0           | 8.5                    |
+| Lucía Sánchez      | 1                  | 0           | 1           | 3.0                    |
+
 
 
 </div>
