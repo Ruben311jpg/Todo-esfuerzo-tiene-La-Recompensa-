@@ -295,10 +295,10 @@ Se quieren clasificar los diagnósticos realizados a los pacientes en dos grupos
 SELECT p.nombre,
   COUNT (*) as total_diagnosticos,
   COUNT (CASE
-          WHEN d.enfermedad IN ('Cirrosis', 'Hepatitis', 'Pancreatitis', 'Gastritis alcohólica', 'Hígado graso alcohólico', 'Encefalopatía hepática'),
+          WHEN d.enfermedad IN ('Cirrosis', 'Hepatitis', 'Pancreatitis', 'Gastritis alcohólica', 'Hígado graso alcohólico', 'Encefalopatía hepática')
             then 1 END) AS total_alcoholicos,
   COUNT (CASE
-          WHEN d.enfermedad IN ('Gastritis', 'Trastorno de asiedad')
+          WHEN d.enfermedad IN ('Gastritis', 'Trastorno de ansiedad')
             then 1 END) AS total_no_alcoholicos
 FROM pacientes p
 JOIN diagnostico_medico d
