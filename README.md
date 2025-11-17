@@ -121,6 +121,7 @@ CREATE TABLE diagnostico_medico(
     CONSTRAINT chk_fecha CHECK (fecha <= CURRENT_DATE), -- La fecha de consulta no puede ser futura
     FOREIGN KEY (dni, id_paciente)
       REFERENCES pacientes(dni, id_paciente)
+ 	  ON DELETE CASCADE
 );
 ")
 ```
@@ -194,6 +195,7 @@ CREATE TABLE evaluacion_psicologica (
     CONSTRAINT chk_fecha_diag CHECK (fecha <= CURRENT_DATE), -- La fecha de consulta no puede ser futura
     FOREIGN KEY (dni, id_paciente)
       REFERENCES pacientes(dni, id_paciente)
+	  ON DELETE CASCADE
 );
 ")
 ```
