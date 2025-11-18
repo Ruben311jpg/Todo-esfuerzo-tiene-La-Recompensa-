@@ -39,7 +39,7 @@ Contendrá los datos de los pacientes.
 dbExecute(con, "
 CREATE TABLE pacientes (
     DNI CHAR(9) UNIQUE NOT NULL,
-    id_paciente SMALLINT PRIMARY KEY,
+    id_paciente SMALLINT NOT NULL,
     nombre VARCHAR(100),
     edad INTEGER CHECK (edad >= 0), -- La edad no puede ser negativa
     sexo VARCHAR(10) CHECK (sexo IN ('Masculino', 'Femenino')), -- Género debe ser uno de estos valores
@@ -47,7 +47,7 @@ CREATE TABLE pacientes (
     ciudad VARCHAR(30) DEFAULT 'Burgos',
     consumo_promedio_ml smallint CHECK (consumo_promedio_ml > 0), -- Consumo de alcohol medido en mililitros/semana
     edad_comienzo_consumo smallint CHECK (edad_comienzo_consumo <= edad), -- Que nadie comience a consumir después de su edad acutal
-    CONSTRAINT ID_no_Asociado UNIQUE (dni, id_paciente)
+    Primary Key (dni, id_paciente)
 );
 ")
 ```
